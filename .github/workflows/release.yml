@@ -39,10 +39,18 @@ jobs:
           configurePreset: windows-${{ matrix.config }}-${{ matrix.gui }}
           buildPreset: windows-${{ matrix.config }}-${{ matrix.gui }}
 
-      - name: Upload artifacts
+      - name: Upload dlls
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: out/build/windows-${{ matrix.config }}-${{ matrix.gui }}/UnrealCppLoader/${{ matrix.config }}/UnrealCppLoader.dll
           asset_name: UnrealCppLoader-${{ matrix.config }}-${{ matrix.gui }}.dll
+          tag: ${{ needs.create-release.outputs.tag }}
+
+      - name: Upload pdbs
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: out/build/windows-${{ matrix.config }}-${{ matrix.gui }}/UnrealCppLoader/${{ matrix.config }}/UnrealCppLoader.pdb
+          asset_name: UnrealCppLoader-${{ matrix.config }}-${{ matrix.gui }}.pdb
           tag: ${{ needs.create-release.outputs.tag }}
