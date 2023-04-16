@@ -65,3 +65,13 @@ jobs:
           file: out/build/windows-${{ matrix.config }}-${{ matrix.gui }}/xinput1_3/xinput1_3.dll
           asset_name: xinput1_3.dll
           tag: ${{ needs.create-release.outputs.tag }}
+
+  publish-release:
+    needs: [create-release, upload-artifacts]
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: mark release as non-draft
+        run: |
+          gh release edit ${{ needs.create-release.outputs.tag }} --draft=false
