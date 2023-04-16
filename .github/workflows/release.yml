@@ -26,7 +26,7 @@ jobs:
       matrix:
         config: [debug, release]
         gui: [gui, nogui]
-    runs-on: x86_64-pc-windows-msvc
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
 
