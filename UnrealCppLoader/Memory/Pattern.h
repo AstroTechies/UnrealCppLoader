@@ -71,6 +71,11 @@ class LOADER_API Pattern
             {
                 m_Data[j] = '\x00';
                 m_Mask[j] = '?';
+
+                if (i != Len - 1 && Pattern[i + 1] == '?')
+                {
+                    i++;
+                }
                 j++;
             }
             else if (c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F' || c >= '0' && c <= '9')
