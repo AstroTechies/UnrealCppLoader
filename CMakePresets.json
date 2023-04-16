@@ -4,8 +4,8 @@
     {
       "name": "windows-default",
       "displayName": "Windows Default",
-      "description": "Sets Ninja generator",
-      "generator": "Ninja",
+      "description": "Sets VS generator",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "architecture": {
         "value": "x64",
