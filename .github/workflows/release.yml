@@ -1,0 +1,40 @@
+name: Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - v[0-9]+.*
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.create-gh-release.computed-prefeix }}${{ steps.create-gh-release.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: create-gh-release
+        uses: taki-e/create-gh-release-action@v1
+        with:
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+  upload-artifacts:
+    needs: create-release
+    strategy:
+      matrix:
+        config: [debug, release]
+        gui: [gui, nogui]
+    runs-on: x86_64-pc-windows-msvc
+    steps:
+      - uses: actions/checkout@v3
+
+      # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
+      - uses: lukka/get-cmake@latest
+
+      - name: Build artifacts
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: windows-${{ matrix.config }}-${{ matrix.gui }}
+          buildPreset: windows-${{ matrix.config }}-${{ matrix.gui }}
