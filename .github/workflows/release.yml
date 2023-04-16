@@ -12,7 +12,7 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.create-gh-release.computed-prefeix }}${{ steps.create-gh-release.outputs.version }}
+      tag: ${{ steps.create-gh-release.outputs.computed-prefix }}${{ steps.create-gh-release.outputs.version }}
     steps:
       - uses: actions/checkout@v3
       - id: create-gh-release
