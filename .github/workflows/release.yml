@@ -56,3 +56,12 @@ jobs:
           file: out/build/windows-${{ matrix.config }}-${{ matrix.gui }}/UnrealCppLoader/UnrealCppLoader.pdb
           asset_name: UnrealCppLoader-${{ matrix.config }}-${{ matrix.gui }}.pdb
           tag: ${{ needs.create-release.outputs.tag }}
+
+      - name: Upload xinput1_3
+        if: matrix.config == 'release' && matrix.gui == 'nogui'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: out/build/windows-${{ matrix.config }}-${{ matrix.gui }}/xinput1_3/xinput1_3.dll
+          asset_name: xinput1_3.dll
+          tag: ${{ needs.create-release.outputs.tag }}
